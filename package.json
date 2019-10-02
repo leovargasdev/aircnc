@@ -1,0 +1,17 @@
+{
+  "name": "react-projeto",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/LeeonardoVargas/react-projeto.git",
+  "author": "LeeonardoVargas <leu1607@hotmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
+  }
+}
