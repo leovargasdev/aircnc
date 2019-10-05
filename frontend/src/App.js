@@ -1,13 +1,16 @@
 import React from 'react';
-import api from './services/api';
 import './App.css';
+
+// import logo from './assets/logo.svg'
+import Routes from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="teste">
-        perdi 2
-      </h1>
+    <div className="container">
+      {/* <img src="{logo}" alt=""/> */}
+      <div className="content">
+        <Routes />
+      </div>
     </div>
   );
 }

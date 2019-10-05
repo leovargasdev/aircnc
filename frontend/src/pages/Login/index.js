@@ -1,5 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
+import api from '../../services/api';
 
-export default function Login(){
-    return <div />
+export default function Login({ history }){
+    const [email, setEmail] = useState('');
+    
+    async function handleSubmit(event){
+        event.preventDefault();
+        const response = await api.post('/sessions', { email });
+
+        const { _id } = response.data;
+
+        localStorage.setItem('user', _id);
+        
+        history.push('/dashboard');    
+    }
+    
+    return (
+        <>
+            <p>
+                Faça seu Login
+            </p>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="email">E-MAIL</label>
+                <input 
+                    id="email" 
+                    type="email" 
+                    placeholder="seuemail@hotmail.com" 
+                    onChange={event => setEmail(event.target.value)}
+                />
+                <button className="btn" type="submit">Logar</button>
+            </form>
+        </>
+    );
 }
