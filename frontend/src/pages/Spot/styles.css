@@ -1,0 +1,20 @@
+label#img-spot{
+    margin-bottom: 20px;
+    border: 1px dashed #ddd;
+    background-size: cover;
+    cursor: pointer;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label#img-spot input{
+    display: none;
+}
+
+label#img-spot.has-img{
+    border: 0;
+}
+label#img-spot.has-img img{
+    display: none;
+}
