@@ -18,4 +18,5 @@ routes.get('/dashboard', DashboardController.show);
 
 routes.post('/spots/:spot_id/booking', BookingController.store);
 
+
 module.exports = routes;
