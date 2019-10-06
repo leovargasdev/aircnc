@@ -14,18 +14,17 @@ export default function Spot({ history }){
         return imgSpot ? URL.createObjectURL(imgSpot) : null;
     }, [imgSpot]);
 
-    async function handleSubmit(event){
+    async function novoSpot(event){
         event.preventDefault();
 
         const data = new FormData();
-        const { user_id } = localStorage.getItem('user');
-
+        const user_id = localStorage.getItem('user');
+        
         data.append('img', imgSpot);
-        data.append('price', price);
         data.append('techs', techs);
+        data.append('price', price);
         data.append('company', company);
 
-        console.log(data);
         await api.post('/spots', data, {
             headers: { user_id }
         });
@@ -35,13 +34,13 @@ export default function Spot({ history }){
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={novoSpot}>
                 <label 
                     id="img-spot"
                     style={{ backgroundImage: `url(${preview})`}} 
-                    className={imgSpot ? 'has-img' : ''}>
+                    className={imgSpot ? 'has-img' : ''} >
                     <input type="file" onChange={event => setImgSpot(event.target.files[0])}/>
-                    <img src={camera}/>
+                    <img src={camera} />
                 </label>
                 <label htmlFor="company">Empresa</label>
                 <input 
@@ -52,7 +51,7 @@ export default function Spot({ history }){
                     onChange={event => setCompany(event.target.value)}
                 />
 
-                <label htmlFor="price">Preço <span>(Deixar em branco é gratuito o valor)</span></label>
+                <label htmlFor="price">dPreço <span>(Deixar em branco é gratuito o valor)</span></label>
                 <input 
                     id="price"
                     placeholder="Preço da diaria"
@@ -68,11 +67,10 @@ export default function Spot({ history }){
                     value={techs}
                     onChange={event => setTechs(event.target.value)}
                 />
+                <button type="submit" className="btn">
+                    Cadastrar 
+                </button>
             </form>
-
-            <button type="submit" className="btn">
-                Cadastrar
-            </button>
         </>
-    )
+    );
 }

@@ -11,6 +11,8 @@ export default function Login({ history }){
         const { _id } = response.data;
 
         localStorage.setItem('user', _id);
+
+        console.log(localStorage.getItem('user'));
         
         history.push('/dashboard');    
     }
@@ -24,8 +26,8 @@ export default function Login({ history }){
                 <label htmlFor="email">E-MAIL</label>
                 <input 
                     id="email" 
-                    type="email" 
-                    placeholder="seuemail@hotmail.com" 
+                    type="email"  
+                    placeholder="Seu email" 
                     onChange={event => setEmail(event.target.value)}
                 />
                 <button className="btn" type="submit">Logar</button>
