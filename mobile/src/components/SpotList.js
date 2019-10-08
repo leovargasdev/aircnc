@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { withNavigation } from 'react-navigation';
 import {View, Text, Image, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 
 import api from '../services/api';
 
-export default function SpotList({ tech }){
+function SpotList({ tech, navigation }){
     const [spots, setSpots] = useState([]);
 
     useEffect(() => {
@@ -16,6 +17,10 @@ export default function SpotList({ tech }){
         }
         LoadSpots();
     }, []);
+
+    function handleNavigate(id){
+        navigation.navigate('Book', { id });
+    }
 
     return(
         <View style={styles.container}>
@@ -31,11 +36,11 @@ export default function SpotList({ tech }){
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <View style={styles.listItem}>
-                        <Image style={styles.imagemItem} source={{ uri: item.img_url }} />
+                        <Image source={{uri: item.img_url}} style={styles.imagemItem} />
                         <Text style={styles.company}>{item.company}</Text>
                         <Text style={styles.price}>{item.price ? `R$ ${item.price}/dia` : "EH GRATIS"}</Text>
-                        <TouchableOpacity onPress={() => {}} style={styles.btn}>
-                            <Text style={styles.btnTexto}>Reservar Sala</Text>
+                        <TouchableOpacity onPress={() => handleNavigate(item._id)} style={styles.btn}>
+                            <Text style={styles.btnTexto}>Solicitar Reserva</Text>
                         </TouchableOpacity>
                     </View>
                 )}
@@ -61,7 +66,7 @@ const styles = StyleSheet.create({
         paddingTop: 20
     }, 
     listItem:{
-        marginRight: 15,
+        marginLeft: 15,
     },
     imagemItem: {
         width: 200,
@@ -93,4 +98,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15
     }
-})
+});
+
+export default withNavigation(SpotList);
