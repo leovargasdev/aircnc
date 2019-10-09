@@ -7,7 +7,7 @@ import SpotList from '../components/SpotList';
 
 export default function List(){
     const [techs, setTechs] = useState([]);
-
+    // Fica ouvindo caso apareça alguma reserva algum dos spots do usuário
     useEffect(()=>{
         AsyncStorage.getItem('user').then(user_id => {
             const socket = socketio('http://192.168.0.16:3333', {
@@ -19,8 +19,7 @@ export default function List(){
             });
         });
     }, []);
-
-
+    // Configurando o array de tecnologias
     useEffect(()=>{
         AsyncStorage.getItem('techs').then(tech => {
             const techsArray = tech.split(',').map(t => t.trim());

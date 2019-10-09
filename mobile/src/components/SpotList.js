@@ -6,13 +6,12 @@ import api from '../services/api';
 
 function SpotList({ tech, navigation }){
     const [spots, setSpots] = useState([]);
-
+    // Gera a lista de spots filtrado pela tech
     useEffect(() => {
         async function LoadSpots(){
             const response = await api.get('/spots', {
                 params: { tech }
             });
-            console.log(response.data);
             setSpots(response.data);
         }
         LoadSpots();

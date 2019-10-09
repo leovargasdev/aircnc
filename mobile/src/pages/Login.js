@@ -6,27 +6,34 @@ import logo from '../assets/logo.png';
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState('');
-    const [techs, setTechs] = useState('');
+    const [password, setPassword] = useState('');
+    const [techs, setTechs] = useState(null);
 
-    // useEffect(()=>{
-    //     AsyncStorage.getItem('user').then(user => {
-    //         if(user) navigation.navigate('List');
-    //     });
-    // }, []);
+    // Redireciona o usuário já logado para a rota List
+    useEffect(()=>{
+        AsyncStorage.getItem('user').then(user => {
+            if(user) navigation.navigate('List');
+        });
+    }, []);
     
     async function formSubmit() {
         const response = await api.post('/sessions', {
-            email
+            email,
+            password
         });
+        console.log("techs", techs);
+        if(response.data.error){
+            alert("Erro ao acessar a conta!!");
+        } else if(!techs){
+            alert("Inserir ao menos uma tecnologia");
+        } else {
+            const { _id } = response.data;
 
-        const { _id } = response.data;
+            await AsyncStorage.setItem('user', _id);
+            await AsyncStorage.setItem('techs', techs);
 
-        console.log(response.data);
-
-        await AsyncStorage.setItem('user', _id);
-        await AsyncStorage.setItem('techs', techs);
-
-        navigation.navigate('List');
+            navigation.navigate('List');
+        }
     }
 
     return ( 
@@ -36,13 +43,26 @@ export default function Login({ navigation }){
                 <Text style={styles.label}>EMAIL *</Text>
                 <TextInput 
                     style={styles.input}
-                    placeholder="seu email"
+                    placeholder="seu@email.com.br"
                     placeholderTextColor="#999"
                     keyboardType="email-address"
+                    textContentType="emailAddress"
                     autoCapitalize="none"
                     autoCorrect={false}
                     value={email}
                     onChangeText={setEmail}
+                />
+                <Text style={styles.label}>SENHA *</Text>
+                <TextInput 
+                    style={styles.input}
+                    placeholder="Digite sua senha"
+                    placeholderTextColor="#999"
+                    textContentType="password"
+                    autoCapitalize="words"
+                    secureTextEntry={true}
+                    autoCorrect={false}
+                    value={password}
+                    onChangeText={setPassword}
                 />
                 <Text style={styles.label}>TECNOLOGIAS *</Text>
                 <TextInput 
