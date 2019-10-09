@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, SafeAreaView, ScrollView, Image, StyleSheet, AsyncStorage } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, Image, StyleSheet, AsyncStorage, TouchableOpacity, Text } from 'react-native';
 import socketio from 'socket.io-client';
 
 import logo from '../assets/logo.png';
 import SpotList from '../components/SpotList';
 
-export default function List(){
+export default function List({ navigation }){
     const [techs, setTechs] = useState([]);
     // Fica ouvindo caso apareça alguma reserva algum dos spots do usuário
     useEffect(()=>{
@@ -27,12 +27,22 @@ export default function List(){
         });
     }, []);
 
+    async function handleLogout(){
+        await AsyncStorage.setItem('user', '');
+        await AsyncStorage.setItem('techs', '');
+
+        navigation.navigate('Login');
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Image source={logo} style={styles.logo} />
             <ScrollView>
                 {techs.map(tech => <SpotList key={tech} tech={tech}/>)}
             </ScrollView>
+            <TouchableOpacity onPress={handleLogout} style={styles.btnLogout}>
+                <Text style={styles.btnTexto}>Encerrar Sessão</Text>
+            </TouchableOpacity>
         </SafeAreaView>
     );
 }
@@ -46,5 +56,17 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
         alignSelf: 'center',
         marginTop: 10,
+    },
+    btnLogout: {
+        justifyContent: 'space-between',
+        backgroundColor: '#904e4e',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 60,
+    },
+    btnTexto:{
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 15
     }
 });

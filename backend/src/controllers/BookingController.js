@@ -5,7 +5,6 @@ module.exports = {
         const { user_id: user } = req.headers;
         const { spot_id: spot } = req.params;
         const { date, reason } = req.body;
-
         const booking = await Booking.create({
             user, spot, date, reason
         }).catch((error) => {

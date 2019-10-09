@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, Alert, StyleSheet, AsyncStorage, Text, TextInput, TouchableOpacity } from 'react-native';
+import { TextInputMask } from 'react-native-masked-text';
+import { SafeAreaView, Alert, StyleSheet, AsyncStorage, Text, TextInput, TouchableOpacity } from 'react-native';
 
 import api from '../services/api';
 
 export default function Book({ navigation }){
     const spot_id = navigation.getParam('id');
     const [date, setDate] = useState('');
+    const [reason, setReason] = useState('');
 
     async function handleNavigate(){
         const user_id = await AsyncStorage.getItem('user');
 
         await api.post(`/spots/${spot_id}/booking`, {
-            date
+            date, reason
         }, {
             headers: { user_id  }
         });
@@ -26,13 +28,20 @@ export default function Book({ navigation }){
 
     return (
         <SafeAreaView style={styles.contaier}>
-            <Text style={styles.label}>Data</Text>
+            <Text style={styles.label}>Motivo</Text>
             <TextInput 
                 style={styles.input}
-                placeholder="qual data você deseja reservar???"
+                placeholder="Justificativa da locação"
                 placeholderTextColor="#999"
-                autoCapitalize="words"
-                autoCorrect={false}
+                autoCorrect={true}
+                value={reason}
+                onChangeText={setReason}
+            />
+            <Text style={[styles.label, styles.labelDate]}>Data</Text>
+            <TextInputMask
+                style={styles.input}
+                type={'datetime'}
+                options={{ format: 'YYYY/MM/DD' }}
                 value={date}
                 onChangeText={setDate}
             />
@@ -56,6 +65,9 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         marginTop: 20,
     },
+    labelDate:{
+        marginTop: 0,
+    },
     input:{
         borderWidth: 1,
         borderColor: '#ddd',
@@ -63,7 +75,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#444',
         height: 44,
-        marginBottom: 20,
+        marginBottom: 15,
         borderRadius: 2
 
     },
@@ -72,11 +84,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#f05a5b',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 2
+        borderRadius: 2,
+        marginTop: 5
     },
     btnCancelar: {
         backgroundColor: '#ccc',
-        marginTop: 4,
     },  
     btnTexto:{
         color: '#FFF',
