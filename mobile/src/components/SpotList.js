@@ -35,7 +35,10 @@ function SpotList({ tech, navigation }){
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <View style={styles.listItem}>
-                        <Image source={{uri: item.img_url}} style={styles.imagemItem} />
+                        <Image 
+                            style={styles.imagemItem} 
+                            source={{uri: item.img_url}} 
+                        />
                         <Text style={styles.company}>{item.company}</Text>
                         <Text style={styles.price}>{item.price ? `R$ ${item.price}/dia` : "EH GRATIS"}</Text>
                         <TouchableOpacity onPress={() => handleNavigate(item._id)} style={styles.btn}>
