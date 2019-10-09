@@ -10,9 +10,7 @@ const SpotSchema = new mongoose.Schema({
         ref: 'User'
     }
 }, {
-    toJSON:{
-        virtuals: true,
-    },
+    toJSON:{ virtuals: true },
 });
 
 SpotSchema.virtual('img_url').get(function() {

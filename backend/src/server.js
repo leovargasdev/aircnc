@@ -1,9 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
-const socketio = require('socket.io');
 const http = require('http');
 const path = require('path');
+const express = require('express');
+const mongoose = require('mongoose');
+const socketio = require('socket.io');
 
 const routes = require('./routes');
 
@@ -12,16 +12,19 @@ const server = http.Server(app);
 const io =socketio(server);
 const onlineUsers = {}; //Lista de usuário conectados
 
-mongoose.connect('mongodb+srv://vargas:uva007@minhabase-zmb6f.mongodb.net/rocketseat?retryWrites=true&w=majority', {
+// Conexão com o mondoDB Atlas
+mongoose.connect('mongodb+srv://adminTopper:admin@minhabase-zmb6f.mongodb.net/rocketseat?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
+// Adicionando os id's dos usuários conectados à aplicação
 io.on('connect', socket => {
     const { user_id } = socket.handshake.query;
     onlineUsers[user_id] = socket.id;
 });
 
+// Exportando o io para todas as rotas terem acesso
 app.use((req, res, next) => {
     req.io = io;
     req.onlineUsers = onlineUsers;
