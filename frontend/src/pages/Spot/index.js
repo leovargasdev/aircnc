@@ -51,7 +51,7 @@ export default function Spot({ history }){
                     onChange={event => setCompany(event.target.value)}
                 />
 
-                <label htmlFor="price">Preço <span>(Deixar em branco é gratuito o valor)</span></label>
+                <label htmlFor="price">Preço <span>(Ao deixar em branco o valor é gratuito)</span></label>
                 <input 
                     id="price"
                     placeholder="Preço da diaria"

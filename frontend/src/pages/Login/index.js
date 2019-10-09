@@ -3,18 +3,21 @@ import api from '../../services/api';
 
 export default function Login({ history }){
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     
     async function handleSubmit(event){
         event.preventDefault();
-        const response = await api.post('/sessions', { email });
-
-        const { _id } = response.data;
-
-        localStorage.setItem('user', _id);
-
-        console.log(localStorage.getItem('user'));
         
-        history.push('/dashboard');    
+        const response = await api.post('/sessions', { email, password });
+
+        if(response.data.error){
+            alert("Erro ao acessar a conta!!");
+        } else {
+            const { _id } = response.data;
+            localStorage.setItem('user', _id);
+            
+            history.push('/dashboard');    
+        }
     }
     
     return (
@@ -27,8 +30,15 @@ export default function Login({ history }){
                 <input 
                     id="email" 
                     type="email"  
-                    placeholder="Seu email" 
+                    placeholder="seu@email.com.br" 
                     onChange={event => setEmail(event.target.value)}
+                />
+                <label htmlFor="email">SENHA</label>
+                <input 
+                    id="password" 
+                    type="password"
+                    placeholder="Digite sua super senha"  
+                    onChange={event => setPassword(event.target.value)}
                 />
                 <button className="btn" type="submit">Logar</button>
             </form>
