@@ -2,7 +2,7 @@
 
 Projeto desenvolvido durante a Semana OmniStack 9.0 da [RocketSeat](https://rocketseat.com.br/), usando as tecnologias React, React-Native e Nodejs.
 
-Objetivo da aplicação foi criar um app similar ao Airbnb, mas ao invés cadastrar residências é cadastrado salas de empresas.
+Objetivo da aplicação foi criar um app similar ao Airbnb, mas ao invés cadastrar residências é cadastrado salas de empresas..
 
 
 <!-- ## Informações projeto
